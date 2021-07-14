@@ -5,10 +5,10 @@
 USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
 #1 APT UPDATE
-#apt update
+apt update
 
 #2 APT UPGRADE
-#apt upgrade
+apt upgrade
 
 #3 RSYNC
 if [ ! -x "$(command -v rsync)" ]; then

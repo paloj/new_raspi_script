@@ -19,12 +19,12 @@ fi
 
 #4 LOG2RAM
 if [ ! -f /etc/log2ram.conf ]; then
-	cd
+	cd $USER_HOME
 	mkdir tmp
 	cd tmp
 	wget https://github.com/azlux/log2ram/archive/master.tar.gz -O log2ram.tar.gz
 	tar xf log2ram.tar.gz
-	cd ~/tmp/log2ram-master
+	cd $USER_HOME/tmp/log2ram-master
 	./install.sh
 else
 	echo "SKIPPING LOG2RAM: ALREADY INSTALLED..."
@@ -33,9 +33,9 @@ fi
 #5 FAIL2BAN
 if [ ! -f /etc/fail2ban/jail.local ]; then
 	apt install fail2ban
-	cd ~/tmp
-	wget https://github.com/paloj/new_raspi_script/blob/0a4ecf712a97a0a1678c1463f097c35f730ccb17/jail.local
-	cp jail.conf /etc/fail2ban/jail.local
+	cd $USER_HOME/tmp
+	wget https://raw.githubusercontent.com/paloj/new_raspi_script/0a4ecf712a97a0a1678c1463f097c35f730ccb17/jail.local
+	cp $USER_HOME/tmp/jail.local /etc/fail2ban/jail.local
 	service fail2ban restart
 else
 	echo "SKIPPING FAIL2BAN: ALREADY INSTALLED..."
@@ -46,7 +46,7 @@ cd $USER_HOME
 if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "CREATING ALIASES..."
 	touch tmp_aliases
-	echo "alias bans='sudo iptables -L -n | awk '\''$1 =="REJECT" && $4!="0.0.0.0/0" {print $4}'\'''" >> tmp_aliases
+	#echo "alias bans='sudo iptables -L -n | awk '\''$1 =="REJECT" && $4!="0.0.0.0/0" {print $4}'\'''" >> tmp_aliases
 	echo "alias egrep='egrep --color=auto'" >> tmp_aliases
 	echo "alias fgrep='fgrep --color=auto'" >> tmp_aliases
 	echo "alias grep='grep --color=auto'" >> tmp_aliases
@@ -54,12 +54,12 @@ if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "alias ll='ls -lh ; du -sh .'" >> tmp_aliases
 	echo "alias ls='ls --color=auto'" >> tmp_aliases
 	echo "alias relogin='source ~/.bashrc'" >> tmp_aliases
-	cp tmp_aliases .bash_aliases
+	cp tmp_aliases $USER_HOME/.bash_aliases
 	rm tmp_aliases
 else
 	echo "ALIASES NOT CREATED!..."
 fi
-[[ $SUDO_USER ]] && chown "$SUDO_USER" .bash_aliases
+[[ $SUDO_USER ]] && chown "$SUDO_USER" $USER_HOME/.bash_aliases
 
 # FINISHED
 echo "Ready. REBOOT NOW!"

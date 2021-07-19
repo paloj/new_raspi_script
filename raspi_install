@@ -53,6 +53,7 @@ if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "alias la='ls -alh ; du -sh .'" >> tmp_aliases
 	echo "alias ll='ls -lh ; du -sh .'" >> tmp_aliases
 	echo "alias ls='ls --color=auto'" >> tmp_aliases
+	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> tmp_aliases
 	echo "alias relogin='source ~/.bashrc'" >> tmp_aliases
 	cp tmp_aliases $USER_HOME/.bash_aliases
 	rm tmp_aliases

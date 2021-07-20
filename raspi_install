@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #RUN THIS SCRIPT AS SUDO
+#Last updated 20.7.2021
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)

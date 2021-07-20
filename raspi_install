@@ -7,10 +7,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
 #1 APT UPDATE
-apt update
+#apt update
 
 #2 APT UPGRADE
-apt upgrade
+#apt upgrade
 
 #3 RSYNC
 if [ ! -x "$(command -v rsync)" ]; then
@@ -44,20 +44,11 @@ fi
 #6 ALIASES
 if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "CREATING ALIASES..."
-	echo "alias egrep='egrep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias fgrep='fgrep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias grep='grep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias la='ls -alh ; du -sh .'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias ll='ls -lh ; du -sh .'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias ls='ls --color=auto'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias relogin='source ~/.bashrc'" >> $SCRIPT_DIR/tmp_aliases
-	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> $SCRIPT_DIR/tmp_aliases
 	cp $SCRIPT_DIR/tmp_aliases $USER_HOME/.bash_aliases
+	[[ $SUDO_USER ]] && chown "$SUDO_USER" $USER_HOME/.bash_aliases
 else
 	echo "ALIASES NOT CREATED!..."
 fi
-[[ $SUDO_USER ]] && chown "$SUDO_USER" $USER_HOME/.bash_aliases
 
 #7 BASHRC
 	echo "/opt/vc/bin/vcgencmd measure_temp" >> $USER_HOME/.bashrc

@@ -59,8 +59,12 @@ else
 fi
 [[ $SUDO_USER ]] && chown "$SUDO_USER" $USER_HOME/.bash_aliases
 
+#7 BASHRC
+	echo "/opt/vc/bin/vcgencmd measure_temp" >> $USER_HOME/.bashrc
+	echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d' ' -f6,7,8)"
+
 # FINISHED
 cd $USER_HOME
-echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d' ' -f6,7,8)";
+echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d' ' -f6,7,8)"
 echo "Script ready. REBOOT NOW!"
 exit

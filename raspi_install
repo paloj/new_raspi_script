@@ -52,6 +52,7 @@ if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "alias ls='ls --color=auto'" >> $SCRIPT_DIR/tmp_aliases
 	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> $SCRIPT_DIR/tmp_aliases
 	echo "alias relogin='source ~/.bashrc'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> $SCRIPT_DIR/tmp_aliases
 	cp $SCRIPT_DIR/tmp_aliases $USER_HOME/.bash_aliases
 else
 	echo "ALIASES NOT CREATED!..."

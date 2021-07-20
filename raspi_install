@@ -2,6 +2,7 @@
 
 #RUN THIS SCRIPT AS SUDO
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
 #1 APT UPDATE
@@ -12,7 +13,7 @@ apt upgrade
 
 #3 RSYNC
 if [ ! -x "$(command -v rsync)" ]; then
-	apt install rsync
+	apt install -y rsync
 else
 	echo "SKIPPING RSYNC: ALREADY INSTALLED..."
 fi
@@ -32,36 +33,32 @@ fi
 
 #5 FAIL2BAN
 if [ ! -f /etc/fail2ban/jail.local ]; then
-	apt install fail2ban
-	cd $USER_HOME/tmp
-	wget https://raw.githubusercontent.com/paloj/new_raspi_script/0a4ecf712a97a0a1678c1463f097c35f730ccb17/jail.local
-	cp $USER_HOME/tmp/jail.local /etc/fail2ban/jail.local
+	apt install -y fail2ban
+	cp $SCRIPT_DIR/jail.local /etc/fail2ban/jail.local
 	service fail2ban restart
 else
 	echo "SKIPPING FAIL2BAN: ALREADY INSTALLED..."
 fi
 
 #6 ALIASES
-cd $USER_HOME
 if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "CREATING ALIASES..."
-	touch tmp_aliases
-	echo "alias bans='sudo iptables -L -n | awk '\"'\"'\$1 ==\"REJECT\" && \$4!=\"0.0.0.0/0\" {print \$4}'\"'\"''" >> tmp_aliases
-	echo "alias egrep='egrep --color=auto'" >> tmp_aliases
-	echo "alias fgrep='fgrep --color=auto'" >> tmp_aliases
-	echo "alias grep='grep --color=auto'" >> tmp_aliases
-	echo "alias la='ls -alh ; du -sh .'" >> tmp_aliases
-	echo "alias ll='ls -lh ; du -sh .'" >> tmp_aliases
-	echo "alias ls='ls --color=auto'" >> tmp_aliases
-	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> tmp_aliases
-	echo "alias relogin='source ~/.bashrc'" >> tmp_aliases
-	cp tmp_aliases $USER_HOME/.bash_aliases
-	rm tmp_aliases
+	echo "alias egrep='egrep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias fgrep='fgrep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias grep='grep --color=auto'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias la='ls -alh ; du -sh .'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias ll='ls -lh ; du -sh .'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias ls='ls --color=auto'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias temp='/opt/vc/bin/vcgencmd measure_temp'" >> $SCRIPT_DIR/tmp_aliases
+	echo "alias relogin='source ~/.bashrc'" >> $SCRIPT_DIR/tmp_aliases
+	cp $SCRIPT_DIR/tmp_aliases $USER_HOME/.bash_aliases
 else
 	echo "ALIASES NOT CREATED!..."
 fi
 [[ $SUDO_USER ]] && chown "$SUDO_USER" $USER_HOME/.bash_aliases
 
 # FINISHED
-echo "Ready. REBOOT NOW!"
+cd $USER_HOME
+echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d' ' -f6,7,8)";
+echo "Script ready. REBOOT NOW!"
 exit

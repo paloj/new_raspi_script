@@ -46,7 +46,7 @@ cd $USER_HOME
 if [ ! -f $USER_HOME/.bash_aliases ]; then
 	echo "CREATING ALIASES..."
 	touch tmp_aliases
-	#echo "alias bans='sudo iptables -L -n | awk '\''$1 =="REJECT" && $4!="0.0.0.0/0" {print $4}'\'''" >> tmp_aliases
+	echo "alias bans='sudo iptables -L -n | awk '\"'\"'\$1 ==\"REJECT\" && \$4!=\"0.0.0.0/0\" {print \$4}'\"'\"''" >> tmp_aliases
 	echo "alias egrep='egrep --color=auto'" >> tmp_aliases
 	echo "alias fgrep='fgrep --color=auto'" >> tmp_aliases
 	echo "alias grep='grep --color=auto'" >> tmp_aliases

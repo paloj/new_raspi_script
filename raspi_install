@@ -61,7 +61,7 @@ fi
 
 #7 BASHRC
 	echo "/opt/vc/bin/vcgencmd measure_temp" >> $USER_HOME/.bashrc
-	echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d' ' -f6,7,8)"
+	echo 'echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d"' '" -f6,7,8)"' >> $USER_HOME/.bashrc
 
 # FINISHED
 cd $USER_HOME

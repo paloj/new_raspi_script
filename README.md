@@ -2,6 +2,7 @@
 Bash script to install useful programs and settings to new Raspberry Pi
 
 - Programs:
+  - rsync
   - log2ram
   - fail2ban
   

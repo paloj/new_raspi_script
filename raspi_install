@@ -51,8 +51,17 @@ else
 fi
 
 #7 BASHRC
+echo "UPDATING BASHRC IF NEEDED..."
+
+if ! grep -q "measure_temp" $USER_HOME/.bashrc; then
 	echo "/opt/vc/bin/vcgencmd measure_temp" >> $USER_HOME/.bashrc
+	echo "Raspberry CPU temp on login added..."
+fi
+
+if ! grep -q "LAST APT" $USER_HOME/.bashrc; then
 	echo 'echo "LAST APT UPDATE WAS: $(ls -l /var/cache/apt/pkgcache.bin | cut -d"' '" -f6,7,8)"' >> $USER_HOME/.bashrc
+	echo "Last APT update date on login added..."
+fi
 
 # FINISHED
 cd $USER_HOME

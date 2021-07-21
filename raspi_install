@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #RUN THIS SCRIPT AS SUDO
-#Last updated 20.7.2021
+#Last updated 21.7.2021 JP
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
 #1 APT UPDATE
-#apt update
+apt update
 
 #2 APT UPGRADE
-#apt upgrade
+apt upgrade
 
 #3 RSYNC
 if [ ! -x "$(command -v rsync)" ]; then
